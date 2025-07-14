@@ -1,0 +1,17 @@
+<!-- templates/dashboard.html -->
+{% extends "base.html" %}
+
+{% block title %}Dashboard Overview{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">📊 Report Dashboard</h2>
+
+<div class="list-group">
+    <a href="/view/vw_CourseLicensingRevenue" class="list-group-item list-group-item-action">1. Course Licensing & Revenue</a>
+    <a href="/view/vw_TopStudentAchievements" class="list-group-item list-group-item-action">2. Top Performing Students</a>
+    <a href="/view/vw_UserLearningEngagementSummary" class="list-group-item list-group-item-action">3. User Engagement Overview</a>
+    <a href="/view/vw_ActiveStudentEngagement" class="list-group-item list-group-item-action">4. Active Student Engagement</a>
+    <a href="/view/vw_CourseCompletionStats" class="list-group-item list-group-item-action">5. Course Completion Summary</a>
+    <a href="/view/vw_SupportPerformanceMetrics" class="list-group-item list-group-item-action">6. Support Load & Satisfaction</a>
+</div>
+{% endblock %}
