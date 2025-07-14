@@ -181,6 +181,134 @@ project-root/
 
 ```
 ---
+## 1. Flask Backend (`app.py`)
+
+This is the main Python Flask application that:
+
+- Manages user login/logout with session-based authentication.
+- Connects securely to the MySQL database using PyMySQL.
+- Dynamically fetches data from SQL views based on URL parameters.
+- Renders data views with charts using Chart.js.
+- Generates downloadable PDF reports from HTML templates using xhtml2pdf.
+- Protects routes to ensure only authenticated users can access reports.
+---
+**Key Highlights:**
+
+- Database config is stored in `DB_CONFIG` — update credentials before deployment.
+- Login checks the `Users` table with email and password.
+- Routes:
+  - `/login` — User authentication page.
+  - `/logout` — Clears session.
+  - `/` — Dashboard landing page.
+  - `/view/<view_name>` — Render SQL view data with dynamic charts.
+  - `/pdf/<view_name>` — Generate and download PDF reports.
+ 
+---
+## 2. Base Template (`base.html`)
+
+Provides the common page structure and styling for all pages:
+
+- Uses Bootstrap 5.3 for styling and layout.
+- Includes Bootstrap Icons and Chart.js libraries.
+- Features a top dark navbar with dynamic user greeting and logout button.
+- Contains a report selector dropdown for easy navigation among reports.
+- Supports displaying flash messages styled with Bootstrap alerts.
+- Contains a content block where child templates insert page-specific content.
+
+---
+
+## 3. Dashboard Page (`dashboard.html`)
+
+The main landing page after login:
+
+- Extends `base.html`.
+- Displays a list-group menu linking to six key report views.
+- Allows users to quickly navigate to reports like Course Licensing & Revenue, Top Students, Engagement Summaries, and Support Metrics.
+
+---
+
+## 4. Dynamic Report View (`view.html`)
+
+Core template to display detailed report data:
+
+- Extends `base.html`.
+- Dynamically renders the report title from the SQL view name.
+- Shows an **Export PDF** button for downloading the current report.
+- Uses Chart.js to display multiple chart types (bar, line, radar) tailored to each report:
+  - Course completion rates
+  - Licensing revenue
+  - Student achievements
+  - Learning engagement
+  - Active student activity
+  - Support performance
+- Automatically highlights the current report in the base dropdown.
+- Renders a responsive HTML table with all report data.
+- Shows a "No data found" message if empty.
+
+---
+
+## 5. Login Page (`login.html`)
+
+User authentication page styled with Tailwind CSS:
+
+- Responsive centered login form with gradient background.
+- Displays error messages upon failed login attempts.
+- Simple form with email and password fields.
+- Styled login button with hover effects.
+- Meant to be served by the `/login` route and integrate with Flask session management.
+
+---
+
+## 6. Simple Table View (`simple_view.html`)
+
+An alternative minimal report view template:
+
+- Extends `base.html`.
+- Displays report title dynamically.
+- Renders all data in a basic HTML table with minimal styling.
+- Useful as a fallback or when JavaScript/charting is not required.
+- Auto-formats column headers by replacing underscores and capitalizing.
+
+---
+
+### Prerequisites
+
+- Python 3.7+
+- MySQL server with `OnlineCoursePlatformDB` and relevant user privileges
+- Required Python packages:
+
+---
+
+```bash
+pip install Flask pymysql xhtml2pdf
+Running the App
+python app.py
+Access the app at http://127.0.0.1:5000/
+```
+
+---
+## Python Project Structure
+
+1. **Flask Backend (`app.py`)**  
+   Handles routing, authentication, database connection, and PDF generation.
+
+2. **Base Template (`base.html`)**  
+   Common page layout with navbar, report selector, and flash messages.
+
+3. **Dashboard Page (`dashboard.html`)**  
+   Landing page after login with quick links to reports.
+
+4. **Dynamic Report View (`view.html`)**  
+   Displays detailed reports with charts and tables.
+
+5. **Login Page (`login.html`)**  
+   User login form styled with Tailwind CSS.
+
+6. **Simple Table View (`simple_view.html`)**  
+   Minimal tabular data view without JavaScript or charts.
+
+---
+
 ## 📃 License
 
 This project is licensed under the MIT License.  
